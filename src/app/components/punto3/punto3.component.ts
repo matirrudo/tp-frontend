@@ -17,6 +17,7 @@ export class Punto3Component implements OnInit {
   categoria: string;
   adelanto:Adelanto;
   adelantos:Array<Adelanto>;
+  montoAdelantado:number = 0;
 
   constructor(private _pasajeService:PasajeService) {
     this.cargarPasajes();
@@ -155,11 +156,38 @@ export class Punto3Component implements OnInit {
     this.precio = null;
     this.precioTotal = 0;
     this.mostrarTotal = false;
+    this.montoAdelantado=0;
   }
 
   elegirPasaje(pasaje: Pasaje) {
-    this.pasaje = pasaje;
+    var tpasaje = new Pasaje()
+    Object.assign(tpasaje,pasaje)
     this.calcularPrecioInicial(pasaje);
+    this.pasaje=tpasaje;
+  }
+
+  agregarMontoAdelantado(){
+      if(this.calcularPrecioDeMontosDePasaje(this.pasaje)+this.montoAdelantado>this.precioTotal){
+        alert("Se ha superado el precio del pasaje");
+      }else{
+        this.adelanto.fecha= new Date();
+        this.adelanto.montoAdelanto= this.montoAdelantado;
+        this.pasaje.adelantos.push(this.adelanto);
+        this.adelanto= new Adelanto();
+        this.montoAdelantado=0;
+      }
+  }
+  
+  borrarAdelanto(adelanto:Adelanto){
+    var indice=this.pasaje.adelantos.findIndex((element)=>element._id == adelanto._id);
+    this.pasaje.adelantos.splice(indice,1);
+  }
+  calcularPrecioDeMontosDePasaje(pasaje):number{
+    var precioDeMontoDePasajes=0;
+    for(var i=0;i<pasaje.adelantos.length;i++){
+      precioDeMontoDePasajes=precioDeMontoDePasajes+pasaje.adelantos[i].montoAdelanto;
+    }
+    return precioDeMontoDePasajes;
   }
 
 

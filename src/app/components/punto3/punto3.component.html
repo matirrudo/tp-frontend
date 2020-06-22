@@ -46,20 +46,23 @@
                                     name="aCobrador" [(ngModel)]="adelanto.cobrador">
                                 </th>
                                 <th scope="col">
-                                    <input class="form-control-sm" placeholder="Cobrador"
-                                    name="aMonto" [(ngModel)]="adelanto.montoAdelanto">
+                                    <input class="form-control-sm" type="number" placeholder="Monto Adelantado"
+                                    name="aMonto" [(ngModel)]="montoAdelantado">
                                 </th>
                                 <th scope="col">
-                                    <button class="btn btn-primary">Agregar</button>
+                                    <button class="btn btn-primary"
+                                    (click)=agregarMontoAdelantado()>Agregar</button>
                                 </th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr *ngFor="let ade of pasaje.adelantos">
-                                <th>{{ade.fecha}}</th>
+                                <th>{{ade.fecha | date:'dd/MM/yyyy'}}</th>
                                 <td>{{ade.cobrador}}</td>
-                                <td>{{ade.montoAdelanto}}</td>
-                                <td><button class="btn btn-primary">Borrar</button></td>
+                                <td>${{ade.montoAdelanto}}</td>
+                                <td><button class="btn btn-primary"
+                                    (click)="borrarAdelanto(ade)">Borrar</button>
+                                </td>
                               </tr>
                             </tbody>
                           </table>
@@ -69,9 +72,10 @@
         </div>
 
             <div class="row form-group">
-                <button type="button" class="btn btn-primary offset-md-4" (click)="registrarVenta()">Registrar
+                <button type="button" class="btn btn-primary offset-md-3" (click)="registrarVenta()">Registrar
                     venta</button>
-                <button type="button" class="btn btn-primary offset-md-1" (click)="cleanField()">Cancelar</button>
+                    <button type="button" class="btn btn-primary offset-md-1" (click)="modificarPasaje()">Modificar venta</button>
+                    <button type="button" class="btn btn-primary offset-md-1" (click)="cleanField()">Cancelar</button>
             </div>
     </form>
 </div>
