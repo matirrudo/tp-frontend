@@ -1,0 +1,31 @@
+<div>
+    <form class="card ">
+        <div class="card-header text-center align-content-center justify-content-center"> Crucigrama</div>
+        <div class="card-body">
+
+            <div class="row form-group text-center align-content-center justify-content-center">
+                <button type="button" class="btn btn-primary" (click)="iniciarjuego()">Iniciar </button>
+            </div>
+            <div class="row form-group justify-content-center text-center">
+                <button type="button" disabled="true" class="btn btn-primary">
+                    Vidas <span class="badge badge-light">{{vidas}}</span>
+                </button>
+                <button type="button" disabled="true" class="btn btn-primary offset-md-1">
+                    Puntos <span class="badge badge-light">{{puntuacion}}</span>
+                </button>
+            </div>
+            <div class="text-center">
+                <img [src]="palabra.urlImagen" class="img-thumbnail rounded mx-auto d-block img-fluid" alt="Empieza el juego!">
+            </div>
+            <br>
+            <div class="row form-group text-center justify-content-center">
+                <h2>{{palabra.palabraEsp | uppercase}}</h2>
+            </div>
+            <div class="row form-group">
+                <label class="col-sm-12 col-md-2  offset-md-3">Palabra en ingles: </label>
+                <input class="form-control col-sm-12 col-md-2" [(ngModel)]="palabraAProbar" name="txtPalabraAProbar" />
+                <button type="button" class="btn btn-primary offset-md-1" (click)="probarPalabra()">Probar</button>
+            </div>
+        </div>
+    </form>
+</div>

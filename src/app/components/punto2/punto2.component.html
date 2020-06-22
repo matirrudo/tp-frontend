@@ -1,0 +1,50 @@
+<div>
+    <form class="card">
+        <div class="card-header"> Registrar asistencia al curso</div>
+        <div class="card-body">
+            <div class="row form-group">
+                <label class="col-sm-12 col-md-2  offset-md-3">Correo Electronico</label>
+                <input class="form-control col-sm-12 col-md-2" name="txtCorreo" [(ngModel)]="asistente.usuario" />
+            </div>
+            <div class="row form-group">
+                <label class="col-sm-12 col-md-2 offset-md-3">Organización</label>
+                <input class="form-control col-sm-12 col-md-2" name="txtOrganicacion"
+                    [(ngModel)]="asistente.nombreOrganizacion" />
+            </div>
+            <div class="row form-group">
+                <label class="col-sm-12 col-md-2 offset-md-3">Solicita constancia</label>
+                <input type="checkbox"  id="chkConsatancia" [checked]="asistente.requiereConstancia"
+                    (change)="solicitarConstancia($event)">
+            </div>
+        </div>
+        <div class="row form-group">
+            <button type="button" class="btn btn-primary offset-md-4" (click)="registrarAsistente()">Registrar</button>
+            <button type="button" class="btn btn-primary offset-md-1" (click)="cleanFields()">Cancelar</button>
+            <button type="button" class="btn btn-primary offset-md-1" (click)="modificarAsistente()"><i class="fas fa-save fal"></i> Modificar</button>  
+        </div>
+    </form>
+</div>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Usuario</th>
+            <th scope="col">Organizacion</th>
+            <th scope="col">Solicita Constancia</th>
+            <th scope="col">Fecha</th>
+            <th >Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let a of asistentes">
+            <th scope="row">{{a.usuario}}</th>
+            <td>{{a.nombreOrganizacion | uppercase}}</td>
+            <td><input type="checkbox" [checked]="a.requiereConstancia" disabled></td>
+            <td>{{a.fecha}}</td>
+            <td>                
+                <button class="btn btn-primary" (click)="elegirAsistente(a)" >Seleccinar</button>
+                <button class="btn btn-primary" (click)="borrarAsistente(a)" >Borrar</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

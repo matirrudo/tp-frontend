@@ -1,0 +1,108 @@
+<div>
+    <form class="card">
+        <div class="card-header"> Registrar venta</div>
+        <div class="card-body">
+            <div class="row form-group">
+                <label class="col-sm-12 col-md-2  offset-md-3">DNI</label>
+                <input class="form-control col-sm-12 col-md-2" type="number" name="txtCorreo"
+                    [(ngModel)]="pasaje.dniPasajero" />
+            </div>
+            <div class="row form-group">
+                <label class="col-sm-12 col-md-2 offset-md-3">Precio</label>
+                <input class="form-control col-sm-12 col-md-2" type="number" name="txtOrganicacion" [(ngModel)]="precio"
+                    (change)="calcularTotal2($event)" />
+            </div>
+            <div class="row form-group">
+                <label class="col-sm-12 col-md-2 offset-md-3">Categoria</label>
+                <select class="form-control col-sm-12 col-md-2" name="categoria" [(ngModel)]="categoria"
+                    (change)="calcularTotal($event.target.value)">
+                    <option value="m">Menor</option>
+                    <option value="a">Adulto</option>
+                    <option value="j">Jubilado</option>
+                </select>
+            </div>
+            <div class="row form-group" *ngIf="mostrarTotal">
+                <label class="col-sm-12 col-md-2 offset-md-3" *ngIf="mostrarTotal">Total:</label>
+                <label class="col-sm-12 col-md-2 " *ngIf="mostrarTotal">${{precioTotal}}</label>
+            </div>
+        </div>
+        <div id="accordion">
+            <div class="card col-sm-12 col-md-6  offset-md-3">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link " data-toggle="collapse" data-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne">
+                            Adelantos
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table table-sm">
+                            <thead>
+                              <tr>
+                                <th scope="col">
+                                    <input class="form-control-sm" placeholder="Cobrador"
+                                    name="aCobrador" [(ngModel)]="adelanto.cobrador">
+                                </th>
+                                <th scope="col">
+                                    <input class="form-control-sm" placeholder="Cobrador"
+                                    name="aMonto" [(ngModel)]="adelanto.montoAdelanto">
+                                </th>
+                                <th scope="col">
+                                    <button class="btn btn-primary">Agregar</button>
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let ade of pasaje.adelantos">
+                                <th>{{ade.fecha}}</th>
+                                <td>{{ade.cobrador}}</td>
+                                <td>{{ade.montoAdelanto}}</td>
+                                <td><button class="btn btn-primary">Borrar</button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="row form-group">
+                <button type="button" class="btn btn-primary offset-md-4" (click)="registrarVenta()">Registrar
+                    venta</button>
+                <button type="button" class="btn btn-primary offset-md-1" (click)="cleanField()">Cancelar</button>
+            </div>
+    </form>
+</div>
+<br>
+<table class="table table-striped" [mfData]=pasajes #mf="mfDataTable" [mfRowsOnPage]="5">
+    <thead>
+        <tr>
+            <th scope="col">DNI</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Precio Total</th>
+            <th scope="col">Fecha</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let pasaje of mf.data">
+            <th scope="row">{{pasaje.dniPasajero}}</th>
+            <td>{{pasaje.categoriaPasajero}}</td>
+            <td>${{pasaje.precioPasaje}}</td>
+            <td>{{pasaje.fechaCompra | date:'dd/MM/yyyy'}}</td>
+            <td>
+                <button class="btn btn-primary" (click)="elegirPasaje(pasaje)">Seleccinar</button>
+                <button class="btn btn-primary" (click)="borrarPasaje(pasaje)">Borrar</button>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>
+                <mfBootstrapPaginator></mfBootstrapPaginator>
+            </td>
+        </tr>
+    </tfoot>
+</table>

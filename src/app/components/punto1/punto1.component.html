@@ -1,0 +1,62 @@
+<div>
+    <form class="card" method="POST" action="" #formMensaje="ngForm">
+        <div class="card-header"> Envio de Mensajes</div>
+        <div class="card-body">
+            <div class="row form-group">
+                <label for="idPara" class="col-sm-12 col-md-1  offset-md-4 offset-lg-4">Para</label>
+                <input id="idPara" class="form-control col-sm-12 col-md-2" type="number" required minlength="5" name="para" #para="ngModel"
+                    [(ngModel)]="mensaje.para" />
+            </div>
+            <div class="row form-group">
+              <label for="idEmpresa" class="col-sm-12 col-md-1 offset-md-4 offset-lg-4">Empresa</label>
+              <select id="idEmpresa" class="form-control col-sm-12 col-md-2" required  
+                name="empresa" #empresa="ngModel"
+                  [(ngModel)]="mensaje.empresa">
+                  <option *ngFor="let emp of empresas" [ngValue]="emp">{{emp.nombre}}</option>
+              </select>
+          </div>
+            
+            <div class="row form-group">
+                <label for="idDesde" class="col-sm-12 col-md-1 offset-md-4">Desde</label>
+                <input id="idDesde" class="form-control col-sm-12 col-md-2" type="number" required  name="desde" #desde="ngModel"
+                    [(ngModel)]="mensaje.desde" />
+            </div>
+            <div *ngIf="para.invalid && (para.dirty || para.touched)" class="alert alert-danger col-sm-2 col-md-3 offset-md-5"> 
+              <div *ngIf="para.errors.required">
+                <h6>El destinatario es requerido.</h6>
+              </div>
+            </div>
+            <label class="offset-md-3">Longitud del texto: {{tamTexto}}</label>
+            <div class="row form-group">
+                <textarea class="form-control col-md-6 offset-md-3" [maxlength]="tamMaxTexto" minlength="6" required name="texto" #texto="ngModel" rows="5" name="txtTexto" [(ngModel)]="mensaje.texto"
+                    (ngModelChange)="cambiarTamTexto()">
+          </textarea>
+            </div>
+            <div class="row form-group">
+                <button type="button" class="btn btn-primary offset-md-4" [disabled]="formMensaje.invalid && submited" (click)="enviarMensaje()">Enviar</button>
+                <button type="button" class="btn btn-primary offset-md-2"(click)="limpiarMensaje()">Limpiar</button>
+            </div>
+        </div>
+        <br>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Desde</th>
+                <th scope="col">Para</th>
+                <th scope="col">Empresa</th>
+                <th scope="col">Mensaje</th>
+                <th scope="col">Fecha</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let i of mensajes">
+                <th scope="row">{{i.desde}}</th>
+                <td>{{i.para}}</td>
+                <td>{{i.empresa.nombre}}</td>
+                <td>{{i.texto}}</td>
+                <td>{{i.fecha}}</td>
+              </tr>
+            </tbody>
+          </table>
+    </form>
+</div>
